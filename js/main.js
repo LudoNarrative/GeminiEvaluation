@@ -43,14 +43,32 @@ requirejs(
 		HealthBar, State, Condition, Display, StoryAssembler) {
 
 	var gameFile = game_1;
-	loadGame (gameFile);
+	loadPage();
+	loadGame(gameFile);
 
 	document.getElementById("input").onchange = function(e) { openFile(e) };
 
+	function loadPage () {
+
+		// Check URL params: "?a=1" or "a=2" for study 1 or 2
+		var urlParams = new URLSearchParams(window.location.search);
+
+		console.log ("urlParams:", urlParams);
+		console.log("group:",urlParams.get('a')); // true
+
+		// TODO: if order doesn't yet exist in local storage,
+		// select random order, store it in local storage, 
+		// Call loadGame() with first game
+
+		// If order does exist, check gameCounter to decide which game to load next
+
+	}
+
 	function loadGame (gameFile) {
 
+		initTimer();
+
 		var aspGameFile  = gameFile.split("==========")[0];
-		var instructions = gameFile.split("==========")[1];
 	
 		// Compile Cygnus .lp files into Phaser code
 		//var generator = AspPhaserGenerator.AspPhaserGenerator (aspGameFile,initialPhaserFile);
@@ -71,10 +89,50 @@ requirejs(
 	
 		eval(phaserProgram);
 		
-		$("#instructionsdiv").prepend("<div id='instructions'>"//+"<h2>Beach Cleanup</h2>"
-			+instructions+"</div>");
+		//console.log ("FINISHED PHASER PROGRAM:\n", phaserProgram);
 
-		console.log ("FINISHED PHASER PROGRAM:\n", phaserProgram);
+	}
+
+	function endGame () {
+
+		// Slowly fade out the game container and destroy the current game
+		$(".container").fadeOut(2000, function() {
+			if ( game !== "undefined") {
+				game.destroy();
+			}
+		});
+
+		// TODO: Replace with end screen and button to progress to the next survey
+
+	}
+
+	function initTimer() {
+
+		var time = 180; // 180 = 3 min, 300 = 5 min
+
+		var displayText = document.querySelector('#time'),
+			timer = new CountDownTimer(time), // in seconds
+        	timeObj = CountDownTimer.parse(time);
+
+        format(timeObj.minutes, timeObj.seconds);
+    
+    	// Run a couple functions on every tick
+	    timer.onTick(format)
+	    timer.onTick(checkExpired);
+	    timer.start();
+
+	    // End game if timer is done
+	    function checkExpired() {
+	    	if (this.expired()) {
+	    		endGame();
+	    	}
+	    }
+
+	    // Format time left to display in timer html
+	    function format(minutes, seconds) {
+        	seconds = seconds < 10 ? "0" + seconds : seconds;
+        	displayText.textContent = minutes + ':' + seconds;
+    	}
 
 	}
 
@@ -94,7 +152,7 @@ requirejs(
 			}
 
 			// Remove current instructions
-			$("#instructions").empty();
+			//$("#instructions").empty();
 
 	        loadGame (contents);
 	
@@ -102,6 +160,8 @@ requirejs(
 	
 	    reader.readAsText(input.files[0]);
 	}
+
+
 
 });
 

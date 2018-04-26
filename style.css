@@ -9,14 +9,18 @@
 
 .container {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
 #input {
-	background: lightgrey; /*darkseagreen;*/
+	/*background: lightgrey; /*darkseagreen;*/
     padding: 4px;
+}
+
+#restart {
+	font-size: 14px;
 }
 
 pre {
@@ -35,8 +39,20 @@ body {
 	font-family: Abel;
 }
 
+#timer {
+	position: absolute;
+    top: 30px;
+    right: 30px;
+    font-size: large;
+}
+
+#time {
+    font-size: 60px;
+}
+
+
 #game {
-	padding:20px;
-	margin:20px;
+	padding-top:20px;
+	margin-bottom:20px;
 	background:lightgrey;
 }

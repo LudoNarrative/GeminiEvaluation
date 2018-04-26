@@ -6,6 +6,8 @@
     <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="style.css">
 
+	<script src="CountDownTimer.js"></script>
+
 	<!-- data-main attribute tells require.js to load scripts/main.js after require.js loads. -->
     <script data-main="./js/main.js" src="./lib/require.js"></script>
 
@@ -15,26 +17,16 @@
 	<div class="parent-container">
 
 					
-
-		<div id="contents">
-	
-		</div>
+		<div id="timer">Time left to<br>play this game:<br><span id="time"></span></div>
 
 		<div class="container">
 
 			<div id="game">
-
 				<!-- Phaser will create a canvas element here --> 
 			</div>
 
-			<div id="instructionsdiv">				
-				<!-- Instructions prepended here --> 
-
-				<div id="inputdiv">
-					<input type="file" id="input" accept=".lp,.txt">
-				</div>
-
-			</div>
+			<button id="restart">Restart game</button>
+			<input type="file" id="input" accept=".lp,.txt">
 
 		</div>
 	</div>
