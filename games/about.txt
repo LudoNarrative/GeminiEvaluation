@@ -1,0 +1,21 @@
+* About these games
+Some of these games have descriptive labels on entities and hand written instructions and some don't, so we may need to tweak stuff before the evaluation.
+
+* Beach Scrubbing
+A low-stress activity meant to represent cleaning algae off of crabs (or something like that?)
+
+** beach_a1.lp has the player drag around red triangles to push them into each other, which clears away a bit of orange (which is the game's goal).
+** beach_a2.lp is like beach_a1, but the player has to wait for red triangles to come in periodically
+** beach_b1.lp is mechanically different from the above, and requires that the player use their red triangles to push away blue triangles which perform the actual scrubbing.
+* Lecture: Seeking Out Misunderstandings
+A more challenging game meant to represent how a teacher tries to communicate ideas effectively to students.  The game is lost if concentration drops too low.
+
+** lecture_dodge_a1 has the player push away red triangles when their mouse button is held down, with the goal of making some red triangle touch the blue triangle _while_ the mouse button is held down.
+** lecture_dodge_a2 has the player controlling the red triangles in a slightly more awkward way, but the rules are otherwise the same; also there are multiple blue triangles this time.
+** lecture_dodge_b1 is more different, with the red triangles constantly moving and only turning counterclockwise when the mouse is pressed.  Concentration only goes up when the cursor is used to click on the blue triangles. 
+* Lecture: Scrubbing Away Confusion
+Like the lecture_dodge games, in this game the player is trying to maintain something to do well in a classroom lecture setting, in this case keeping the screen free of blue "paint."
+
+** lecture_scrubMode_a1 asks the player to drag a red triangle onto a blue triangle, at which time any blue paint underneath the red triangle will be wiped away along with both red and blue triangles.  Blue triangles arrive whenever red ones touch, and blue triangles also gradually fade out over time.  Red triangles arrive every few seconds.
+** lecture_scrubMode_a2 has a single blue triangle smearing blue paint behind it, and red triangles have the same behavior as before (only the blue triangle is never destroyed).  It is more difficult.
+** lecture_scrubMode_b1 has a single blue triangle smearing blue paint, but red triangles also smear paint as they're dragged around.  If the cursor scrubs over a blue region _while_ a red is touching a blue, the blue paint is removed.

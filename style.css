@@ -1,0 +1,42 @@
+
+.parent-container {
+	display: flex;
+	height: 100vh;
+	align-items: center;  /* vertical center */
+	justify-content: center; /* horizontal center */
+	flex-direction: column;
+}
+
+.container {
+	display: flex;
+	flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#input {
+	background: lightgrey; /*darkseagreen;*/
+    padding: 4px;
+}
+
+pre {
+	font-family: helvetica-light;
+}
+
+#instructions {
+	font-family: helvetica-light;
+}
+
+div#instructionsdiv h2 {
+	margin-top:0;
+}
+
+body {
+	font-family: Abel;
+}
+
+#game {
+	padding:20px;
+	margin:20px;
+	background:lightgrey;
+}
