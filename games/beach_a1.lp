@@ -1,5 +1,5 @@
-label(resource(r_1_XX_),effort,write).
-label(entity(e_1_XX_),person).
+%label(resource(r_1_XX_),effort,write).
+%label(entity(e_1_XX_),person).
 
 entity(e_1_XX_).
 
