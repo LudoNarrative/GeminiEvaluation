@@ -22,14 +22,6 @@ requirejs.config({
 
 	}
 
-	/*
-	shim: {
-		"jQueryUI": {
-			export: "$",
-			deps: ["jQuery"]
-		}
-	}*/
-
 });
 
 requirejs(
@@ -59,8 +51,11 @@ requirejs(
 			1 : [3,4,5]
 		};
 
-	var gameset = [];
-	var currentGameFile;
+	var userID;
+	var gameset = []; // Stores indices into gameFileMap array
+	var currentGameFile, currentGameID;
+
+	$("#endscreen").fadeOut(0);
 
 	loadPage();
 	updateGameCount(); 
@@ -68,6 +63,7 @@ requirejs(
 	document.getElementById("input").onchange = function(e) { openFileReader(e); };
 	document.getElementById("gear").onclick = function(e) { clearCache(); };
 	document.getElementById("restart").onclick = function() { restartGame(); };
+	document.getElementById("done").onclick = function() { endGame(); };
 
 	/*
 	 * Assign participant to a group and order if they haven't been assigned already.
@@ -76,15 +72,19 @@ requirejs(
 	function loadPage () {
 
 		// Check if user has been assigned a study group yet
-		if (localStorage.getItem("studyGroupID")) { 
+		if (localStorage.getItem("userID")) { 
 
 			console.log (localStorage.getItem("studyGroupID"),
 						 "\n gameSet: [", localStorage.getItem("game0"),
 						 				  localStorage.getItem("game1"),
 						 				  localStorage.getItem("game2"), "]");
 
-
 		} else {
+
+			// Generate unique user ID
+			userID = Math.random().toString(36).substr(2, 9);
+
+			localStorage.setItem("userID",userID);
 
 			// Assign user a random study group (0 or 1)
 			localStorage.setItem("studyGroupID", getRandomID()); 
@@ -93,9 +93,9 @@ requirejs(
 			gameset = shuffle (studyGroupMap [localStorage.getItem("studyGroupID")] );
 
 			// Store the chosen order in local storage (localStorage doesn't accept arrays)
-			localStorage.setItem("game0", gameFileMap[gameset[0]]);
-			localStorage.setItem("game1", gameFileMap[gameset[1]]);
-			localStorage.setItem("game2", gameFileMap[gameset[2]]);
+			localStorage.setItem("game0", gameset[0]); 
+			localStorage.setItem("game1", gameset[1]);
+			localStorage.setItem("game2", gameset[2]);
 
 			// Initialize the counter of games played by this user (ranges 0-2)
 			localStorage.setItem("currentGameCount", 0);
@@ -106,10 +106,9 @@ requirejs(
 		}
 
 		var currentGameCount = localStorage.getItem("currentGameCount");
-		currentGameFile = localStorage.getItem("game"+currentGameCount); 
+		currentGameID = parseInt( localStorage.getItem("game"+currentGameCount) ); 
+		currentGameFile = gameFileMap[currentGameID];
 		loadGame(openFile(currentGameFile));
-
-		// If order does exist, check gameCounter to decide which game to load next
 
 	}
 
@@ -180,6 +179,18 @@ requirejs(
 
 	function endGame () {
 
+		// Generate URL parameters to pass to survey site: 
+		// group ID, game ID, participant ID, game count
+		var urlParams = "?user=" 	  + localStorage.getItem("userID") + 
+						"&group="	  + localStorage.getItem("studyGroupID") +
+						"&game="  	  + currentGameID +
+						"&gamecount=" + (parseInt(localStorage.getItem("currentGameCount"))+1) // ranges 1-3
+						;
+
+		console.log("URL params to pass to survey:", urlParams);
+
+		// TODO: Construct URL to redirect to survey
+
 		// Slowly fade out the game container and destroy the current game
 		$(".container").fadeOut(2000, function() {
 			if ( game !== "undefined") {
@@ -187,19 +198,16 @@ requirejs(
 			}
 		});
 
+		// Replace game with end screen and button to progress to the next survey
+		$("#instructions").fadeOut(2000, function () {
+			$("#endscreen").fadeIn(500);
+		});
+
 		// Increment or reset counter of games played by this user
 		// If user has already played 3 games, reset counter to 0
 		var previousGameCount = parseInt(localStorage.getItem("currentGameCount"));
 		var nextGameCount = previousGameCount >= 2 ? 0 : previousGameCount+1;
-		localStorage.setItem("currentGameCount", nextGameCount);
-
-		// Generate URL parameters to pass to survey site: 
-		// group ID, game ID, participant ID, game count
-
-
-		// 
-
-		// Replace game with end screen and button to progress to the next survey
+		localStorage.setItem("currentGameCount", nextGameCount);		
 
 	}
 
@@ -263,17 +271,12 @@ requirejs(
 				game.destroy();
 			}
 
-			// Remove current instructions
-			//$("#instructions").empty();
-
 	        loadGame (contents);
 	
 	    };
 	
 	    reader.readAsText(input.files[0]);
 	}
-
-
 
 });
 

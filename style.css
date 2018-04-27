@@ -1,4 +1,9 @@
 
+@font-face {
+    font-family: "Abel";
+    src: url("assets/fonts/Abel-Regular.ttf");
+}
+
 .parent-container {
 	display: flex;
 	height: 100vh;
@@ -10,8 +15,8 @@
 .container {
 	display: flex;
 	flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  	align-items: center;
+  	justify-content: center;
 }
 
 #input {
@@ -29,13 +34,13 @@ pre {
 
 #instructions {
 	font-family: helvetica-light;
-  width:400px;
-  position: absolute;
-  left: 20px;
+	width: 400px;
+	position: absolute;
+	left: 20px;
 }
 
 body {
-	  font-family: Abel;
+	font-family: Abel;
 }
 
 .fixed {
@@ -67,10 +72,15 @@ body {
 	margin-top: 10px;
 }
 
-
 #game {
-	  padding-top:20px;
-	  margin-bottom:20px;
-	  background:lightgrey;
+	padding-top: 20px;
+	margin-bottom: 20px;
+	background: lightgrey;
+}
+
+#endscreen {
+	font-size: 30px;
+	text-align: center;
+	display: none;
 }
 
