@@ -20,9 +20,6 @@ requirejs.config({
 		"Display" : "./Display.js", // Dummy version of the one from ClimateChange/js/. Referenced by the generated Phaser games. 
 		"StoryAssembler" : "./StoryAssembler.js", // Dummy version of StoryAssembler for Phaser to reference
 
-		// *** Initial Cygnus file ***
-		"game_1" : "../games/beach_a1.lp"
-
 	}
 
 	/*
@@ -36,32 +33,120 @@ requirejs.config({
 });
 
 requirejs(
-	["Phaser","AspPhaserGenerator","text!initialPhaserFile","text!game_1",
+	["Phaser","AspPhaserGenerator","text!initialPhaserFile",
 	"text!HealthBar","text!State","text!Condition","text!Display","text!StoryAssembler",
 	"jQuery"],
-	function (Phaser, AspPhaserGenerator, initialPhaserFile, game_1,
+	function (Phaser, AspPhaserGenerator, initialPhaserFile,
 		HealthBar, State, Condition, Display, StoryAssembler) {
 
-	var gameFile = game_1;
+
+	// Mapping of game IDs used by studyGroupMap to game filenames 
+	var gameFileMap = 
+		{
+			0 : "games/lecture_scrubMode_a1.lp", 
+			1 : "games/lecture_scrubMode_a2.lp", 
+			2 : "games/beach_a1.lp",
+
+			3 : "games/lecture_dodge_b1.lp", 
+			4 : "games/beach_a2.lp",
+			5 : "games/beach_b1.lp"
+		};
+
+	// Mapping of study group IDs to the set of games participants will play
+	var studyGroupMap = 
+		{
+			0 : [0,1,2],
+			1 : [3,4,5]
+		};
+
+	var gameset = [];
+	var currentGameFile;
+
 	loadPage();
-	loadGame(gameFile);
+	updateGameCount(); 
+	
+	document.getElementById("input").onchange = function(e) { openFileReader(e); };
+	document.getElementById("gear").onclick = function(e) { clearCache(); };
+	document.getElementById("restart").onclick = function() { restartGame(); };
 
-	document.getElementById("input").onchange = function(e) { openFile(e) };
-
+	/*
+	 * Assign participant to a group and order if they haven't been assigned already.
+	 * Store in localStorage. Load the next game. 
+	 */
 	function loadPage () {
 
-		// Check URL params: "?a=1" or "a=2" for study 1 or 2
-		var urlParams = new URLSearchParams(window.location.search);
+		// Check if user has been assigned a study group yet
+		if (localStorage.getItem("studyGroupID")) { 
 
-		console.log ("urlParams:", urlParams);
-		console.log("group:",urlParams.get('a')); // true
+			console.log (localStorage.getItem("studyGroupID"),
+						 "\n gameSet: [", localStorage.getItem("game0"),
+						 				  localStorage.getItem("game1"),
+						 				  localStorage.getItem("game2"), "]");
 
-		// TODO: if order doesn't yet exist in local storage,
-		// select random order, store it in local storage, 
-		// Call loadGame() with first game
+
+		} else {
+
+			// Assign user a random study group (0 or 1)
+			localStorage.setItem("studyGroupID", getRandomID()); 
+
+			// Assign user a random order of games from their study group's gameset
+			gameset = shuffle (studyGroupMap [localStorage.getItem("studyGroupID")] );
+
+			// Store the chosen order in local storage (localStorage doesn't accept arrays)
+			localStorage.setItem("game0", gameFileMap[gameset[0]]);
+			localStorage.setItem("game1", gameFileMap[gameset[1]]);
+			localStorage.setItem("game2", gameFileMap[gameset[2]]);
+
+			// Initialize the counter of games played by this user (ranges 0-2)
+			localStorage.setItem("currentGameCount", 0);
+
+			console.log ("No study group ID. Assign:",localStorage.getItem("studyGroupID"),
+						 "\n gameset 0:", gameset);
+
+		}
+
+		var currentGameCount = localStorage.getItem("currentGameCount");
+		currentGameFile = localStorage.getItem("game"+currentGameCount); 
+		loadGame(openFile(currentGameFile));
 
 		// If order does exist, check gameCounter to decide which game to load next
 
+	}
+
+	function updateGameCount () {
+		document.getElementById("gamecount").textContent = 
+			parseInt(localStorage.getItem("currentGameCount"))+1;
+	}
+
+	function clearCache () {
+		localStorage.clear();
+	}
+
+	// Return random choice between 0 or 1
+	function getRandomID () {
+		return Math.floor(Math.random() * 2);
+	}
+
+
+	// The Fisher-Yates (aka Knuth) Shuffle
+	// Via https://github.com/Daplie/knuth-shuffle
+	function shuffle(array) {
+		var currentIndex = array.length, temporaryValue, randomIndex;
+	
+		// While there remain elements to shuffle...
+	  	while (0 !== currentIndex) {
+	
+	    	// Pick a remaining element...
+	    	randomIndex = Math.floor(Math.random() * currentIndex);
+	    	currentIndex -= 1;
+	
+	    	// And swap it with the current element.
+	    	temporaryValue = array[currentIndex];
+	    	array[currentIndex] = array[randomIndex];
+	    	array[randomIndex] = temporaryValue;
+	  	}
+	
+	  	return array;
 	}
 
 	function loadGame (gameFile) {
@@ -73,7 +158,7 @@ requirejs(
 		// Compile Cygnus .lp files into Phaser code
 		//var generator = AspPhaserGenerator.AspPhaserGenerator (aspGameFile,initialPhaserFile);
 		//var phaserProgram = AspPhaserGenerator.generate (generator.cygnusBrain, generator.initialPhaserBrain, true);
-		var phaserProgram = AspPhaserGenerator.compile (aspGameFile, initialPhaserFile, true);
+		var phaserProgram = AspPhaserGenerator.compile (aspGameFile, initialPhaserFile, false);
 	
 		/* Phaser Game Constructor: new Game(width, height, renderer, parent, state, transparent, antialias, physicsConfig);
 		 * Creates a canvas element
@@ -102,8 +187,24 @@ requirejs(
 			}
 		});
 
-		// TODO: Replace with end screen and button to progress to the next survey
+		// Increment or reset counter of games played by this user
+		// If user has already played 3 games, reset counter to 0
+		var previousGameCount = parseInt(localStorage.getItem("currentGameCount"));
+		var nextGameCount = previousGameCount >= 2 ? 0 : previousGameCount+1;
+		localStorage.setItem("currentGameCount", nextGameCount);
 
+		// Generate URL parameters to pass to survey site: 
+		// group ID, game ID, participant ID, game count
+
+
+		// 
+
+		// Replace game with end screen and button to progress to the next survey
+
+	}
+
+	function restartGame() {
+		this.game.state.restart();
 	}
 
 	function initTimer() {
@@ -136,8 +237,19 @@ requirejs(
 
 	}
 
+	function openFile (filename) {
+
+		var request = new XMLHttpRequest();
+		request.open('GET', filename, false);
+		request.send();
+		var fileContent = request.responseText;
+
+		return fileContent;
+
+	}
+
 	// Called when the file chooser form input is submitted
-	function openFile (event) {
+	function openFileReader (event) {
 	    var input = event.target;
 	
 	    var reader = new FileReader();

@@ -3,8 +3,8 @@
 	display: flex;
 	height: 100vh;
 	align-items: center;  /* vertical center */
-	justify-content: left; /* horizontal center */
-	flex-direction: row;
+	justify-content: center; /* horizontal center */
+	flex-direction: column;
 }
 
 .container {
@@ -30,21 +30,41 @@ pre {
 #instructions {
 	font-family: helvetica-light;
   width:400px;
+  position: absolute;
+  left: 20px;
 }
 
 body {
 	  font-family: Abel;
 }
 
+.fixed {
+	position: absolute;
+}
+
+#gear {
+	bottom: 5px;
+    left: 20px;
+    color: lightgrey;
+    font-size: 30px;
+}
+
 #timer {
-	  position: absolute;
     top: 30px;
     right: 30px;
     font-size: large;
+    text-align: right;
 }
 
 #time {
     font-size: 60px;
+}
+
+#done {
+	width: 140px;
+	text-align: left;
+	padding: 10px;
+	margin-top: 10px;
 }
 
 
