@@ -1,4 +1,4 @@
-label(resource(r_1_XX_),effort,write).
+label(resource(r_1_XX_),r1,write).
 label(entity(e_1_XX_),e(1)).
 label(entity(e_2_XX_),e(2)).
 
@@ -11,7 +11,7 @@ many(entity(e_1_XX_)).
 many(entity(e_2_XX_)).
 
 initialize(set_value(resource(r_1_XX_),scalar(0))).
-initialize(fill(all,orange)).
+initialize(fill(all,blue)).
 initialize(add(entity(e_1_XX_),scalar(1),location(top,left))).
 initialize(add(entity(e_1_XX_),scalar(1),location(bottom,center))).
 initialize(add(entity(e_1_XX_),scalar(1),location(top,right))).
@@ -47,7 +47,7 @@ initialize(set_value(resource(r_1_XX_),scalar(0))).
 initialize(set_value(resource(r_1_XX_),scalar(1))).
 
 precondition(control_event(button(mouse,pressed)),outcome(o_1_XX_)).
-precondition(le(amount(orange),scalar(5)),outcome(o_1_XX_)).
+precondition(le(amount(blue),scalar(5)),outcome(o_1_XX_)).
 result(outcome(o_1_XX_),decrease(property(entity(e_1_XX_),health),scalar(6))).
 result(outcome(o_1_XX_),increase(property(entity(e_1_XX_),health),scalar(4))).
 result(outcome(o_1_XX_),add(entity(e_1_XX_),scalar(1),pool(entity(e_1_XX_)))).
@@ -74,18 +74,12 @@ precondition(tick,tick).
 result(tick,apply_restitution(entity(e_1_XX_),entity(e_1_XX_))).
 result(tick,apply_restitution(entity(e_2_XX_),entity(e_2_XX_))).
 
-reading(bad,orange).
+reading(bad,blue).
 reading(produces,relation(pool(entity(e_1_XX_)),entity(e_1_XX_))).
 reading(good,outcome(orbit_the_cursor_entity_e_1_XX__XX__XX_)).
 reading(costs,relation(entity(e_1_XX_),property(entity(e_1_XX_),health))).
 reading(stakes(low),resource(r_1_XX_)).
 ==========
 <ul>
-<li>games/beach_diff_3.lp</li>
-<li>GOAL:<ul>
-</ul></li>
-<li>CONTROLS:<ul>
-<li>	controlling [[red|triangle]] by making it orbit the cursor 
-by holding the mouse button
-</li>
-</ul></ul>
+<li>game f</li>
+</ul>

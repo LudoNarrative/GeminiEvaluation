@@ -1,5 +1,5 @@
-%label(entity(e_1_XX_),e1).
-%label(entity(e_2_XX_),e(2)).
+label(entity(e_1_XX_),e(1)).
+label(entity(e_2_XX_),e(2)).
 label(resource(r_1_XX_),r(1),private).
 
 entity(e_1_XX_).
@@ -90,15 +90,5 @@ reading(stakes(low),resource(r_1_XX_)).
 reading(help,relation(entity(e_2_XX_),player)).
 ==========
 <ul>
-<li>games/lecture_scrubMode_1.lp</li>
-<li>GOAL:<ul>
-<li>Reduce blue</li>
-</ul></li>
-
-<li>SUBGOALS:<ul>
-<li>
-attempting to make a [[blue|triangle]] and [[red|triangle]] touch
-</li>
-</ul></li>
-<li>CONTROLS:<ul>
-</ul></ul>
+<li>game a</li>
+</ul>

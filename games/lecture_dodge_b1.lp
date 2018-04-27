@@ -1,5 +1,5 @@
-label(entity(e_1_XX_),e1).
-label(resource(r_1_XX_),concentration,write).
+label(entity(e_1_XX_),e(1)).
+label(resource(r_1_XX_),r1,write).
 label(entity(e_2_XX_),e(2)).
 
 entity(e_1_XX_).
@@ -81,23 +81,5 @@ reading(risk_reward,control_event(button(mouse,held))).
 reading(maintenance,resource(r_1_XX_)).
 ==========
 <ul>
-<li>games/lec_dodge_diff_2.lp</li>
-<li>GOAL:<ul>
-<li>Produce concentration</li>
-</ul></li>
-
-<li>SUBGOALS:<ul>
-<li>
-	clicking on a [[blue|triangle]]
-</li>
-</ul></li>
-<li>AVOID:<ul>
-<li>
-	attempting to make a [[blue|triangle]] and [[red|triangle]] touch
-</li>
+<li>game d</li>
 </ul>
-<li>CONTROLS:<ul>
-<li>	controlling [[red|triangle]] by making it rotate 
-by holding the mouse button
-</li>
-</ul></ul>
