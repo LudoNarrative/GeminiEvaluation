@@ -3,15 +3,15 @@
 	display: flex;
 	height: 100vh;
 	align-items: center;  /* vertical center */
-	justify-content: center; /* horizontal center */
-	flex-direction: column;
+	justify-content: left; /* horizontal center */
+	flex-direction: row;
 }
 
 .container {
 	display: flex;
 	flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  align-items: center;
+  justify-content: center;
 }
 
 #input {
@@ -29,18 +29,15 @@ pre {
 
 #instructions {
 	font-family: helvetica-light;
-}
-
-div#instructionsdiv h2 {
-	margin-top:0;
+  width:400px;
 }
 
 body {
-	font-family: Abel;
+	  font-family: Abel;
 }
 
 #timer {
-	position: absolute;
+	  position: absolute;
     top: 30px;
     right: 30px;
     font-size: large;
@@ -52,7 +49,8 @@ body {
 
 
 #game {
-	padding-top:20px;
-	margin-bottom:20px;
-	background:lightgrey;
+	  padding-top:20px;
+	  margin-bottom:20px;
+	  background:lightgrey;
 }
+
