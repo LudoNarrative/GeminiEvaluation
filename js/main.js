@@ -54,6 +54,7 @@ requirejs(
 	var userID;
 	var gameset = []; // Stores indices into gameFileMap array
 	var currentGameFile, currentGameID;
+	var restart = 0; // Number of times this user has restarted on this game
 
 	$("#endscreen").fadeOut(0);
 
@@ -188,12 +189,11 @@ requirejs(
 		var urlParams = "?user=" 	  + localStorage.getItem("userID") + 
 						"&group="	  + localStorage.getItem("studyGroupID") +
 						"&game="  	  + currentGameID +
+						"&rcount="	  + restart + 
 						"&gamecount=" + (parseInt(localStorage.getItem("currentGameCount"))+1) // ranges 1-3
 						;
 
 		console.log("URL params to pass to survey:", urlParams);
-
-		// TODO: Construct URL to redirect to survey
 
 		// Slowly fade out the game container and destroy the current game
 		$(".container").fadeOut(2000, function() {
@@ -213,17 +213,23 @@ requirejs(
 		// If user has already played 3 games, reset counter to 0
 		var previousGameCount = parseInt(localStorage.getItem("currentGameCount"));
 		var nextGameCount = previousGameCount >= 2 ? 0 : previousGameCount+1;
-		localStorage.setItem("currentGameCount", nextGameCount);		
+		localStorage.setItem("currentGameCount", nextGameCount);	
+
+		// Forward user to survey page when they click 'next'
+		document.getElementById("next").onclick = function() { 
+			window.location.href = "https://www.surveygizmo.com/s3/4331932/ResGen-Spring-2018-Post-Survey" + urlParams;
+		};	
 
 	}
 
 	function restartGame() {
+		restart += 1;
 		this.game.state.restart();
 	}
 
 	function initTimer() {
 
-		var time = 180; // 180 = 3 min, 300 = 5 min
+		var time = 300; // 180 = 3 min, 300 = 5 min
 
 		var displayText = document.querySelector('#time'),
 			timer = new CountDownTimer(time), // in seconds
