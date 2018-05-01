@@ -1,6 +1,6 @@
-label(entity(e_1_XX_),e(1)).
-label(entity(e_2_XX_),e(2)).
-label(resource(r_1_XX_),r(1),private).
+label(entity(e_1_XX_),e1).
+label(entity(e_2_XX_),e2).
+label(resource(r_1_XX_),r1,private).
 
 entity(e_1_XX_).
 entity(e_2_XX_).

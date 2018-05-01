@@ -1,5 +1,5 @@
 label(resource(r_1_XX_),r1,write).
-label(entity(e_1_XX_),e(1)).
+label(entity(e_1_XX_),e1).
 
 entity(e_1_XX_).
 

@@ -60,10 +60,13 @@ requirejs(
 	loadPage();
 	updateGameCount(); 
 	
-	document.getElementById("input").onchange = function(e) { openFileReader(e); };
 	document.getElementById("gear").onclick = function(e) { clearCache(); };
 	document.getElementById("restart").onclick = function() { restartGame(); };
-	document.getElementById("done").onclick = function() { endGame(); };
+	document.getElementById("done").onclick = function() { 
+		if ( confirm("Are you sure you want to stop playing this game? You won't have a chance to return to this game.") ) {
+			endGame(); 
+		}
+	};
 
 	/*
 	 * Assign participant to a group and order if they haven't been assigned already.
@@ -82,6 +85,7 @@ requirejs(
 		} else {
 
 			// Generate unique user ID
+			// Via https://gist.github.com/gordonbrander/2230317
 			userID = Math.random().toString(36).substr(2, 9);
 
 			localStorage.setItem("userID",userID);
@@ -198,6 +202,8 @@ requirejs(
 			}
 		});
 
+		$("#timer").fadeOut(2000);
+		
 		// Replace game with end screen and button to progress to the next survey
 		$("#instructions").fadeOut(2000, function () {
 			$("#endscreen").fadeIn(500);
