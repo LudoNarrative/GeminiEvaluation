@@ -113,7 +113,32 @@ requirejs(
 		var currentGameCount = localStorage.getItem("currentGameCount");
 		currentGameID = parseInt( localStorage.getItem("game"+currentGameCount) ); 
 		currentGameFile = gameFileMap[currentGameID];
-		loadGame(openFile(currentGameFile));
+
+		if (currentGameCount == 0) {
+			showIntro(openFile(currentGameFile));
+		} else {
+			loadGame(openFile(currentGameFile));
+		}
+	}
+
+	function showIntro (gameFile) {
+
+		$("#intro1").fadeIn(500);
+
+		document.getElementById("intro1-next").onclick = function() {
+			$("#intro1").fadeOut(500, function () {
+				$("#intro2").fadeIn(500, function () {
+					$("#instructions").fadeIn(500);
+				});
+			});
+
+			document.getElementById("intro2-next").onclick = function() {
+				$("#intro2").fadeOut(500, function() {
+					loadGame(gameFile); 
+				})
+			};
+
+		};
 
 	}
 
@@ -156,6 +181,10 @@ requirejs(
 	function loadGame (gameFile) {
 
 		initTimer();
+
+		// Make sure instructions and restart button are visible
+		$("#instructions").fadeIn();
+		$("#restart-container").fadeIn();
 
 		var aspGameFile  = gameFile.split("==========")[0];
 	
@@ -228,6 +257,8 @@ requirejs(
 	}
 
 	function initTimer() {
+
+		$("#timer").fadeIn();
 
 		var time = 300; // 180 = 3 min, 300 = 5 min
 
