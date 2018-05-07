@@ -21,11 +21,13 @@
 }
 
 #clear {
+	font-family: helvetica;
+	font-style: bold;
 	display: none;
 	margin: auto;
     width: 50%;
     text-align: center;
-    font-size: xx-large;
+    font-size: x-large;
     z-index: 100;
 }
 
@@ -62,6 +64,8 @@
 }
 
 #restart-container{
+	font-family: garamond;
+	font-style: italic;
 	display: none;
 	text-align: center;
 }
@@ -74,7 +78,8 @@ pre {
 	font-family: helvetica-light;
 	width: 400px;
 	position: absolute;
-	left: 20px;
+	left: 0px;
+	margin-left: 3vw;
 	display: none;
 }
 
@@ -118,7 +123,8 @@ body {
 }
 
 .intro, #presurvey, #intro1, #intro2 {
-	font-family: Times;
+	font-family: Helvetica;
+	font-size: large;
 	display: none;
 	width: 40%;
 }
