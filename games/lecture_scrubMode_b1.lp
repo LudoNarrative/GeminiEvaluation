@@ -78,16 +78,4 @@ reading(good,outcome(o_2_XX_)).
 reading(hand_eye_coordination,game).
 reading(help,relation(entity(e_2_XX_),player)).
 ==========
-<ul>
-<li>games/lecture_clear_diff_5.lp</li>
-<li>GOAL:<ul>
-<li>Reduce blue</li>
-</ul></li>
-
-<li>SUBGOALS:<ul>
-<li>
-attempting to make a [[blue|triangle]] and [[red|triangle]] touch
-</li>
-</ul></li>
-<li>CONTROLS:<ul>
-</ul></ul>
+Reduce blue

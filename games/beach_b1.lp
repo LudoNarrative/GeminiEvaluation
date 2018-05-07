@@ -80,6 +80,4 @@ reading(good,outcome(orbit_the_cursor_entity_e_1_XX__XX__XX_)).
 reading(costs,relation(entity(e_1_XX_),property(entity(e_1_XX_),health))).
 reading(stakes(low),resource(r_1_XX_)).
 ==========
-<ul>
-<li>game f</li>
-</ul>
+Fill the resource bar

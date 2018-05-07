@@ -80,6 +80,4 @@ reading(hand_eye_coordination,game).
 reading(risk_reward,control_event(button(mouse,held))).
 reading(maintenance,resource(r_1_XX_)).
 ==========
-<ul>
-<li>game d</li>
-</ul>
+Keep the resource bar filled

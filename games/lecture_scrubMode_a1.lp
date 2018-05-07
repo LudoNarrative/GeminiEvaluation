@@ -84,19 +84,4 @@ reading(help,relation(entity(e_2_XX_),player)).
 reading(sharing,relation(entity(e_1_XX_),entity(e_2_XX_))).
 reading(costs,relation(entity(e_1_XX_),property(entity(e_1_XX_),health))).
 ==========
-<ul>
-<li>games/lecture_scrub_a_2.lp</li>
-<li>GOAL:<ul>
-<li>Reduce blue</li>
-</ul></li>
-
-<li>SUBGOALS:<ul>
-<li>
-	holding the mouse button
-</li>
-<li>
-attempting to make a [[blue|triangle]] and [[red|triangle]] touch
-</li>
-</ul></li>
-<li>CONTROLS:<ul>
-</ul></ul>
+Keep the resource bar filled

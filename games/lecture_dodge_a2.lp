@@ -95,26 +95,4 @@ reading(tradeoff,entity(e_1_XX_)).
 reading(tradeoff,entity(e_2_XX_)).
 reading(stakes(low),resource(r_1_XX_)).
 ==========
-<ul>
-<li>games/lec_dodge_diff_5.lp</li>
-<li>GOAL:<ul>
-<li>Produce concentration</li>
-</ul></li>
-
-<li>SUBGOALS:<ul>
-<li>
-	holding the mouse button
-	 at the same time as
-attempting to make a [[blue|triangle]] and [[red|triangle]] touch
-</li>
-</ul></li>
-<li>AVOID:<ul>
-<li>
-	attempting to make a [[blue|triangle]] and [[red|triangle]] touch
-</li>
-</ul>
-<li>CONTROLS:<ul>
-<li>	controlling [[red|triangle]] by making it orbit the cursor 
-by holding the mouse button
-</li>
-</ul></ul>
+Keep the resource bar filled

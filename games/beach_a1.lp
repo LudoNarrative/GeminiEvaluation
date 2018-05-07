@@ -54,6 +54,4 @@ reading(good,outcome(o_1_XX_)).
 reading(stakes(low),resource(r_1_XX_)).
 reading(grinding,resource(r_1_XX_)).
 ==========
-<ul>
-<li>game c</li>
-</ul>
+Fill the resource bar

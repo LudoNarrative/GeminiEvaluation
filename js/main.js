@@ -202,9 +202,13 @@ requirejs(
 
 		// Make sure instructions and restart button are visible
 		$("#instructions").fadeIn();
+		$("#game-container").fadeIn();
 		$("#restart-container").fadeIn();
 
 		var aspGameFile  = gameFile.split("==========")[0];
+		var goal = gameFile.split("==========")[1];
+
+		document.getElementById("goaltext").textContent = goal;
 	
 		// Compile Cygnus .lp files into Phaser code
 		//var generator = AspPhaserGenerator.AspPhaserGenerator (aspGameFile,initialPhaserFile);
