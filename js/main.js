@@ -55,6 +55,7 @@ requirejs(
 	var gameset = []; // Stores indices into gameFileMap array
 	var currentGameFile, currentGameID;
 	var restart = 0; // Number of times this user has restarted on this game
+	var time, timer, timeElapsed;
 
 	$("#endscreen").fadeOut(0);
 
@@ -62,12 +63,6 @@ requirejs(
 	updateGameCount(); 
 	
 	document.getElementById("gear").onclick = function(e) { clearCache(); };
-	document.getElementById("restart").onclick = function() { restartGame(); };
-	document.getElementById("done").onclick = function() { 
-		if ( confirm("Are you sure you want to stop playing this game? You won't have a chance to return to this game.") ) {
-			endGame(); 
-		}
-	};
 
 	/*
 	 * Assign participant to a group and order if they haven't been assigned already.
@@ -200,7 +195,7 @@ requirejs(
 
 		initTimer();
 
-		// Make sure instructions and restart button are visible
+		// Make sure instructions and game container (goal, game, and restart button) are visible
 		$("#instructions").fadeIn();
 		$("#game-container").fadeIn();
 		$("#restart-container").fadeIn();
@@ -231,6 +226,19 @@ requirejs(
 		
 		//console.log ("FINISHED PHASER PROGRAM:\n", phaserProgram);
 
+		// Add listeners to restart and done buttons
+		document.getElementById("restart").onclick = function() { restartGame(); };
+		document.getElementById("done").onclick = function() { 
+
+			// Todo: pause timer while waiting for a response
+			//timer.pause();
+			if ( confirm("Are you sure you want to stop playing this game? You won't have a chance to return to it later.") ) {
+				endGame(); 
+			}
+			//timer.resume();
+
+		};
+
 	}
 
 	function endGame () {
@@ -241,10 +249,14 @@ requirejs(
 						"&group="	  + localStorage.getItem("studyGroupID") +
 						"&game="  	  + currentGameID +
 						"&rcount="	  + restart + 
+						"&t="		  + timeElapsed + 
 						"&gamecount=" + (parseInt(localStorage.getItem("currentGameCount"))+1) // ranges 1-3
 						;
 
 		console.log("URL params to pass to survey:", urlParams);
+
+		console.log("time left:",document.getElementById("time").textContent, 
+					"timeElapsed:", timeElapsed);
 
 		// Slowly fade out the game container and destroy the current game
 		$(".container").fadeOut(2000, function() {
@@ -282,13 +294,15 @@ requirejs(
 
 		$("#timer").fadeIn();
 
-		var time = 300; // 180 = 3 min, 300 = 5 min
+		time = 300; // 180 = 3 min, 300 = 5 min
+		var totalTime = CountDownTimer.parse(time);
+		var displayText = document.querySelector('#time');
 
-		var displayText = document.querySelector('#time'),
-			timer = new CountDownTimer(time), // in seconds
-        	timeObj = CountDownTimer.parse(time);
+		// Global timer object
+		timer = new CountDownTimer(time); // in seconds
 
-        format(timeObj.minutes, timeObj.seconds);
+		// Initialize the display with 5:00
+        format(totalTime.minutes, totalTime.seconds);
     
     	// Run a couple functions on every tick
 	    timer.onTick(format)
@@ -302,10 +316,13 @@ requirejs(
 	    	}
 	    }
 
-	    // Format time left to display in timer html
+	    // Format time left to display in timer html and update global variable
 	    function format(minutes, seconds) {
-        	seconds = seconds < 10 ? "0" + seconds : seconds;
-        	displayText.textContent = minutes + ':' + seconds;
+	    	
+	    	seconds = seconds < 10 ? "0" + seconds : seconds;
+        	displayText.textContent =  minutes + ':' + seconds;
+
+        	timeElapsed = time - (minutes*60 + seconds);
     	}
 
 	}
