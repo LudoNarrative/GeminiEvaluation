@@ -1,6 +1,6 @@
-label(entity(e_1_XX_),e1).
-label(resource(r_1_XX_),concentration,write).
-label(entity(e_2_XX_),e(2)).
+%label(entity(e_1_XX_),e1).
+%label(resource(r_1_XX_),concentration,write).
+%label(entity(e_2_XX_),e(2)).
 
 entity(e_1_XX_).
 entity(e_2_XX_).
@@ -21,7 +21,7 @@ initialize(add(entity(e_2_XX_),scalar(1),location(middle,right))).
 initialize(set_color(entity(e_1_XX_),red)).
 initialize(set_sprite(entity(e_1_XX_),triangle)).
 initialize(set_sprite(entity(e_2_XX_),triangle)).
-initialize(set_color(entity(e_2_XX_),blue)).
+initialize(set_color(entity(e_2_XX_),yellow)).
 
 pool(entity(e_2_XX_),location(top,left),random,ordered).
 pool(entity(e_2_XX_),location(top,center),random,ordered).
