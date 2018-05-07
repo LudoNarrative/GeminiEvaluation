@@ -62,7 +62,15 @@ requirejs(
 	loadPage();
 	updateGameCount(); 
 	
-	document.getElementById("gear").onclick = function(e) { clearCache(); };
+	// Add hotkey for clearing localStorage
+	document.onkeydown = function(e) {
+		// Alt + Shift + P or Alt + Shift + Q
+		if (e.altKey && e.shiftKey && e.which == 80) {
+		    clearCache();
+		} else if (e.altKey && e.shiftKey && e.which == 81) {
+		    clearCache();
+		}
+	};
 
 	/*
 	 * Assign participant to a group and order if they haven't been assigned already.
@@ -162,6 +170,15 @@ requirejs(
 
 	function clearCache () {
 		localStorage.clear();
+
+		// Give feedback and display message
+		$("#screen").fadeIn();
+		$("#clear").fadeIn(500, function() {
+			$("#clear").fadeOut(500);
+			$("#screen").fadeOut(800);
+		});
+
+
 	}
 
 	// Return random choice between 0 or 1
@@ -318,7 +335,7 @@ requirejs(
 
 	    // Format time left to display in timer html and update global variable
 	    function format(minutes, seconds) {
-	    	
+
 	    	seconds = seconds < 10 ? "0" + seconds : seconds;
         	displayText.textContent =  minutes + ':' + seconds;
 
