@@ -30,6 +30,7 @@
 
 #restart-container{
 	display: none;
+	text-align: center;
 }
 
 pre {
@@ -90,7 +91,7 @@ body {
 	display: none;
 }
 
-#intro1,#intro2 {
+.intro, #presurvey, #intro1,#intro2 {
 	font-family: Times;
 	display: none;
 	width: 40%;

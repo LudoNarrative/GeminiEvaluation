@@ -123,22 +123,40 @@ requirejs(
 
 	function showIntro (gameFile) {
 
-		$("#intro1").fadeIn(500);
+		if (localStorage.getItem("finishedPreSurvey")) {
 
-		document.getElementById("intro1-next").onclick = function() {
-			$("#intro1").fadeOut(500, function () {
-				$("#intro2").fadeIn(500, function () {
-					$("#instructions").fadeIn(500);
+			$("#presurvey").fadeOut();
+			$("#intro1").fadeIn(500);
+	
+			document.getElementById("intro1-next").onclick = function() {
+				$("#intro1").fadeOut(500, function () {
+					$("#intro2").fadeIn(500, function () {
+						$("#instructions").fadeIn(500);
+					});
 				});
-			});
-
-			document.getElementById("intro2-next").onclick = function() {
-				$("#intro2").fadeOut(500, function() {
-					loadGame(gameFile); 
-				})
+	
+				document.getElementById("intro2-next").onclick = function() {
+					$("#intro2").fadeOut(500, function() {
+						loadGame(gameFile); 
+					})
+				};
+	
 			};
+	
+		} else {
 
-		};
+			$("#presurvey").fadeIn(500);
+
+			// Just pass the userID to presurvey
+			var urlParams = "?user=" + localStorage.getItem("userID");
+
+			localStorage.setItem("finishedPreSurvey",true);
+
+			document.getElementById("presurvey-next").onclick = function() {
+				window.location.href = "http://www.surveygizmo.com/s3/4325482/ResGen-Spring-2018-Pre-Survey" + 
+					urlParams;
+			}
+		}
 
 	}
 
