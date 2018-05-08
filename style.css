@@ -81,6 +81,7 @@ pre {
 	left: 0px;
 	margin-left: 3vw;
 	display: none;
+  pointer-events:none;
 }
 
 body {
