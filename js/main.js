@@ -55,7 +55,8 @@ requirejs(
 	var gameset = []; // Stores indices into gameFileMap array
 	var currentGameFile, currentGameID;
 	var restart = 0; // Number of times this user has restarted on this game
-	var time, timer, timeElapsed;
+	var time, timer;
+	var timeElapsed = 0;
 
 	$("#endscreen").fadeOut(0);
 
@@ -324,6 +325,7 @@ requirejs(
     	// Run a couple functions on every tick
 	    timer.onTick(format)
 	    timer.onTick(checkExpired);
+	    timer.onTick(getTimeElapsed);
 	    timer.start();
 
 	    // End game if timer is done
@@ -333,13 +335,17 @@ requirejs(
 	    	}
 	    }
 
-	    // Format time left to display in timer html and update global variable
+	    // Format time left to display in timer html
 	    function format(minutes, seconds) {
 
+	    	// Add a leading '0' to seconds if it doesn't have 2 digits
 	    	seconds = seconds < 10 ? "0" + seconds : seconds;
         	displayText.textContent =  minutes + ':' + seconds;
+    	}
 
-        	timeElapsed = time - (minutes*60 + seconds);
+    	// Get time elapsed
+    	function getTimeElapsed(minutes, seconds) {
+    		timeElapsed = time - (minutes*60 + seconds);
     	}
 
 	}
